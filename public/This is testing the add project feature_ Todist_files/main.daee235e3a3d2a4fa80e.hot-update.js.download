@@ -1,0 +1,120 @@
+webpackHotUpdate("main",{
+
+/***/ "./src/components/AddProject.js":
+/*!**************************************!*\
+  !*** ./src/components/AddProject.js ***!
+  \**************************************/
+/*! exports provided: AddProject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddProject", function() { return AddProject; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _firebase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../firebase */ "./src/firebase.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers */ "./src/helpers/index.js");
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context */ "./src/context/index.js");
+var _jsxFileName = "D:\\Personal\\Web Development\\React\\todoist\\src\\components\\AddProject.js";
+
+
+
+
+const AddProject = ({
+  shouldShow = false
+}) => {
+  const [show, setShow] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(shouldShow);
+  const [projectName, setProjectName] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+  const projectId = Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["generatePushId"])();
+  const {
+    setProjects
+  } = Object(_context__WEBPACK_IMPORTED_MODULE_3__["useProjectsValue"])();
+
+  const addProject = () => {
+    projectName && _firebase__WEBPACK_IMPORTED_MODULE_1__["firebase"].firestore().collection('projects').add({
+      projectId,
+      name: projectName,
+      userId: "1"
+    }).then(() => {
+      setProjects([]);
+      setProjectName('');
+      setShow(false);
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "add-project",
+    "data-testid": "add-porject",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 30,
+      columnNumber: 9
+    }
+  }, show && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "add-project__input",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 32,
+      columnNumber: 17
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    value: projectName,
+    type: "text",
+    onChange: e => setProjectName(e.target.value),
+    className: "add-project__name",
+    "data-testid": "project-name",
+    type: "text",
+    placeholder: "Name your project",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 33,
+      columnNumber: 21
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "add-project__submit",
+    type: "button",
+    onClick: () => addProject(),
+    "data-testid": "add-project-submit",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 41,
+      columnNumber: 21
+    }
+  }, "Add Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "add-project__cancel",
+    onClick: () => setShow(false),
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 49,
+      columnNumber: 21
+    }
+  }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "add-project__plus",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 57,
+      columnNumber: 13
+    }
+  }, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    "data-testid": "add-project-action",
+    className: "add-project__text",
+    onClick: () => setShow(!show),
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 60,
+      columnNumber: 13
+    }
+  }, "Add Project"));
+};
+
+/***/ })
+
+})
+//# sourceMappingURL=main.daee235e3a3d2a4fa80e.hot-update.js.map

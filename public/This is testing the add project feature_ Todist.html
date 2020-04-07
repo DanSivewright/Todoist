@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:3000/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Web site created using create-react-app">
+    <link rel="apple-touch-icon" href="http://localhost:3000/logo192.png">
+    <link rel="manifest" href="http://localhost:3000/manifest.json">
+    <title>This is testing the add project feature: Todist</title>
+  <style type="text/css">html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-family: 'Roboto', sans-serif;
+  color: #202020;
+  background-color: #fafafa;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+ul {
+  margin: 0;
+  padding: 0; }
+
+/* Mixins
+  ============================================ */
+/* Darkmode
+  ============================================ */
+.darkmode header {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  background-color: #282828;
+  border-color: transparent; }
+
+/* Header
+  ============================================ */
+header {
+  border-bottom: solid 1px #ca2100;
+  background-color: #db4c3f;
+  transition: height 200ms ease-in;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  height: 44px;
+  z-index: 400;
+  position: fixed;
+  top: 0;
+  width: 100%; }
+  @media (max-width: 900px) {
+    header {
+      padding: 0 10px; } }
+  header nav {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    max-width: 922px;
+    margin: auto;
+    height: 44px; }
+    header nav p, header nav li {
+      color: white; }
+    header nav div.logo {
+      padding-left: 8px;
+      grid-area: 1 / 1; }
+      header nav div.logo img {
+        width: 24px; }
+    header nav div.settings {
+      grid-area: 1 / 2;
+      text-align: right; }
+      header nav div.settings ul {
+        float: right; }
+      header nav div.settings ul li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        list-style-type: none;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        vertical-align: middle;
+        float: left; }
+        header nav div.settings ul li:hover {
+          border-radius: 3px;
+          background-color: rgba(255, 255, 255, 0.2); }
+        header nav div.settings ul li.settings__add {
+          margin-right: 15px;
+          font-size: 30px; }
+          header nav div.settings ul li.settings__add button {
+            background-color: transparent;
+            border: 0;
+            color: white;
+            cursor: pointer; }
+        header nav div.settings ul li.settings__darkmode button {
+          background-color: transparent;
+          border: 0;
+          color: white;
+          cursor: pointer;
+          display: flex; }
+          header nav div.settings ul li.settings__darkmode button svg {
+            width: 20px;
+            height: 20px; }
+
+/* Sidebar
+  ============================================ */
+.sidebar {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 266px;
+  height: calc(100vh);
+  padding-top: 74px;
+  position: fixed;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-right: 1px solid #f1f1f1;
+  background-color: #fafafa; }
+  @media (max-width: 900px) {
+    .sidebar {
+      display: none; } }
+  .sidebar li:hover .sidebar__project-delete {
+    display: flex; }
+  .sidebar__project {
+    cursor: pointer; }
+    .sidebar__project div:nth-child(1) {
+      padding: 5px 0;
+      padding-left: 10px;
+      padding-right: 15px;
+      width: 100%;
+      display: flex;
+      align-items: center; }
+    .sidebar__project-delete {
+      margin-left: auto;
+      display: none; }
+      .sidebar__project-delete svg {
+        color: #cacaca; }
+    .sidebar__project.active, .sidebar__project:hover {
+      font-weight: bold;
+      background-color: white; }
+    .sidebar__project:nth-child(1) .sidebar__dot {
+      color: #6accbc; }
+    .sidebar__project:nth-child(2) .sidebar__dot {
+      color: #fad003; }
+    .sidebar__project:nth-child(3) .sidebar__dot {
+      color: #ff8d85; }
+    .sidebar__project:nth-child(4) .sidebar__dot {
+      color: #ff9932; }
+    .sidebar__project:nth-child(5) .sidebar__dot {
+      color: #af38eb; }
+  .sidebar__projects {
+    padding-left: 3px; }
+  .sidebar__project {
+    display: flex;
+    align-items: center;
+    justify-content: left; }
+  .sidebar__dot {
+    margin-right: 10px;
+    font-size: 30px; }
+  .sidebar__middle {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    border-bottom: 1px solid #f1f1f1;
+    padding-left: 10px;
+    cursor: pointer; }
+    .sidebar__middle span {
+      color: #0000008a;
+      margin-right: 10px; }
+      .sidebar__middle span svg.hidden-projects {
+        transform: rotate(-90deg); }
+    .sidebar__middle h2 {
+      margin: 0;
+      color: #333;
+      font-size: 15px;
+      font-weight: bold;
+      padding-bottom: 20px; }
+  .sidebar__generic li {
+    list-style-type: none;
+    color: #333;
+    display: flex;
+    cursor: pointer;
+    line-height: 1.50;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0; }
+    .sidebar__generic li div:nth-child(1) {
+      display: flex;
+      padding: 10px 0 10px 10px;
+      width: 100%; }
+      .sidebar__generic li div:nth-child(1) span:first-of-type {
+        margin-right: 10px;
+        display: flex;
+        align-items: center; }
+        .sidebar__generic li div:nth-child(1) span:first-of-type svg {
+          width: 18px;
+          height: 18px;
+          color: #555; }
+    .sidebar__generic li.active, .sidebar__generic li:hover {
+      font-weight: bold;
+      background-color: white; }
+
+/* Show Confirm Delete
+  ============================================ */
+.project-delete-modal {
+  position: relative; }
+  .project-delete-modal__inner {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    top: 85px;
+    border-radius: 3px;
+    z-index: 99;
+    width: 200px;
+    padding: 10px;
+    top: 10px;
+    right: 0;
+    background-color: white; }
+    .project-delete-modal__inner p {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      line-height: normal;
+      font-weight: normal;
+      font-size: 15px; }
+    .project-delete-modal__inner button {
+      width: "50px";
+      background-color: #db4c3f;
+      color: #fff !important;
+      border: 1px solid transparent;
+      margin-right: 5px;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 13px !important;
+      line-height: 17px;
+      padding: 6px 12px 7px 12px;
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+      border-radius: 3px !important;
+      text-decoration: none !important;
+      text-align: center;
+      cursor: pointer; }
+    .project-delete-modal__inner span {
+      color: #555;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 2px 5px;
+      font-weight: normal; }
+
+/* Main Content
+  ============================================ */
+.content {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  max-width: 922px;
+  margin: auto; }
+
+/* Tasks
+  ============================================ */
+.tasks {
+  width: 656px;
+  background-color: white;
+  margin-left: 266px;
+  border-right: 1px solid #f1f1f1;
+  min-height: calc(100vh);
+  vertical-align: top;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 80px;
+  padding-bottom: 84px; }
+  @media (max-width: 900px) {
+    .tasks {
+      margin-left: 0;
+      width: auto; } }
+  .tasks h2 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 30px 20px 0; }
+  .tasks .add-task {
+    margin-top: 20px; }
+  .tasks__list li {
+    display: flex;
+    line-height: 18px;
+    color: #333;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    list-style-type: none;
+    border-bottom: 1px solid #f0f0f0; }
+    .tasks__list li .checkbox-holder {
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 16px; }
+      .tasks__list li .checkbox-holder .checkbox {
+        cursor: pointer;
+        border-color: gray;
+        color: #343434;
+        height: 16px;
+        width: 16px;
+        display: block;
+        border: 1px solid gray;
+        border-radius: 16px; }
+
+/* Add Task
+  ============================================ */
+.add-task__overlay {
+  background: rgba(102, 102, 102, 0.5);
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  transition: opacity 0.2s ease-in;
+  height: calc(100vh); }
+  .add-task__overlay .add-task__main {
+    overflow: visible;
+    margin-bottom: 20px;
+    margin-top: 55px;
+    border-radius: 5px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 20px 30px;
+    transform: translate(-50%, -50%); }
+    @media (max-width: 900px) {
+      .add-task__overlay .add-task__main {
+        width: 90%; } }
+    .add-task__overlay .add-task__main .header {
+      font-size: 13px;
+      margin-bottom: 20px;
+      float: left; }
+  .add-task__overlay .add-task__cancel-x {
+    cursor: pointer;
+    color: gray;
+    float: right;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 10px; }
+
+.add-task__main {
+  position: relative; }
+
+.add-task__project, .add-task__date {
+  cursor: pointer;
+  float: right;
+  color: gray;
+  margin: 20px 10px; }
+
+.add-task__project {
+  margin-right: 0; }
+
+.add-task__content {
+  width: 100%;
+  border: 1px solid #ddd;
+  background-color: white !important;
+  border-radius: 3px;
+  height: 35px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.add-task__cancel, .add-task__submit {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none; }
+
+.add-task__cancel {
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 2px 5px; }
+
+.add-task__submit {
+  width: "90px";
+  background-color: #db4c3f;
+  color: #fff !important;
+  border: 1px solid transparent;
+  margin-right: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 13px !important;
+  line-height: 17px;
+  padding: 6px 12px 7px 12px;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  border-radius: 3px !important;
+  text-decoration: none !important;
+  text-align: center;
+  cursor: pointer; }
+
+.add-task__shallow, .add-project {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  margin-bottom: 20px; }
+
+.add-task__plus, .add-project__plus {
+  color: #dd4b39;
+  font-size: 18px; }
+
+.add-task__text, .add-project__text {
+  display: inline-block;
+  color: #545454;
+  font-size: 14px;
+  margin-left: 15px; }
+
+/* Task Date
+  ============================================ */
+.task-date {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  top: 85px;
+  border-radius: 3px;
+  background-color: #fff;
+  width: 200px;
+  right: 0; }
+  .task-date__list li {
+    list-style-type: none;
+    display: flex;
+    line-height: 18px;
+    color: #333;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    list-style-type: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-left: 10px;
+    cursor: pointer;
+    padding: 0; }
+    .task-date__list li:hover {
+      background-color: #f9f9f9; }
+    .task-date__list li div:nth-child(1) {
+      padding: 10px;
+      width: 100%;
+      display: flex;
+      align-items: center; }
+      .task-date__list li div:nth-child(1) span:first-of-type {
+        margin-right: 10px; }
+        .task-date__list li div:nth-child(1) span:first-of-type svg {
+          fill: grey; }
+
+/* Project Overlay
+  ============================================ */
+.project-overlay {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  top: 85px;
+  border-radius: 3px;
+  background-color: white; }
+  @media (max-width: 900px) {
+    .project-overlay {
+      width: 200px;
+      right: 0; } }
+  .project-overlay__list li {
+    list-style-type: none;
+    display: flex;
+    line-height: 18px;
+    color: #333;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    list-style-type: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-left: 10px;
+    cursor: pointer;
+    padding: 0; }
+    .project-overlay__list li:hover {
+      background-color: #f9f9f9; }
+    .project-overlay__list li div:nth-child(1) {
+      width: 100%;
+      padding: 10px; }
+
+/* Add Project
+  ============================================ */
+.add-project {
+  padding-left: 13px;
+  padding-right: 20px;
+  margin-top: 20px; }
+  .add-project__input {
+    margin-bottom: 20px; }
+  .add-project__name {
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: white !important;
+    border-radius: 3px;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px; }
+  .add-project__submit {
+    width: "100px";
+    background-color: #db4c3f;
+    color: #fff !important;
+    border: 1px solid transparent;
+    margin-right: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 13px !important;
+    line-height: 17px;
+    padding: 6px 12px 7px 12px;
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    border-radius: 3px !important;
+    text-decoration: none !important;
+    text-align: center;
+    cursor: pointer; }
+  .add-project__cancel {
+    color: #555;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 2px 5px; }
+</style></head>
+  <body data-gr-c-s-loaded="true">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"><div class="App"><header class="header" data-testid="header"><nav><div class="logo"><img src="./This is testing the add project feature_ Todist_files/logo.png" alt="todoist"></div><div class="settings"><ul><li data-testid="quick-add-task-action" class="settings__add">+</li><li data-testid="dark-mode-action" class="settings__darkmode"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M158.87.15c-16.16-1.52-31.2 8.42-35.33 24.12l-14.81 56.27c187.62 5.49 314.54 130.61 322.48 317l56.94-15.78c15.72-4.36 25.49-19.68 23.62-35.9C490.89 165.08 340.78 17.32 158.87.15zm-58.47 112L.55 491.64a16.21 16.21 0 0 0 20 19.75l379-105.1c-4.27-174.89-123.08-292.14-299.15-294.1zM128 416a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm48-152a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm104 104a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path></svg></li></ul></div></nav></header><div class="content"><div class="sidebar" data-testid="sidebar"><ul class="sidebar__generic"><li data-testid="inbox" class="active"><div data-testid="inbox-action" aria-label="Show inbox tasks" tabindex="0" role="button"><span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M567.938 243.908L462.25 85.374A48.003 48.003 0 0 0 422.311 64H153.689a48 48 0 0 0-39.938 21.374L8.062 243.908A47.994 47.994 0 0 0 0 270.533V400c0 26.51 21.49 48 48 48h480c26.51 0 48-21.49 48-48V270.533a47.994 47.994 0 0 0-8.062-26.625zM162.252 128h251.497l85.333 128H376l-32 64H232l-32-64H76.918l85.334-128z"></path></svg></span><span>Inbox</span></div></li><li data-testid="today"><div data-testid="today-action" aria-label="Show today&#39;s tasks" tabindex="0" role="button"><span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M400 64h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V160h352v298c0 3.3-2.7 6-6 6z"></path></svg></span><span>Today</span></div></li><li data-testid="next_7"><div data-testid="next_7-action" aria-label="Show tasks for the next 7 days" tabindex="0" role="button"><span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg></span><span>Next 7 days</span></div></li></ul><div class="sidebar__middle" aria-label="Show/hide projects" role="button" tabindex="0"><span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg></span><h2>Projects</h2></div><ul class="sidebar__projects"><li data-testid="project-action-parent" data-doc-id="4sEZOmbrfmFl0xENDR2d" class="active sidebar__project"><div role="button" data-testid="project-action" tabindex="0" aria-label="Select This is testing the add project feature as the task project"><span class="sidebar__dot">•</span><span class="sidebar__project-name">This is testing the add project feature</span><span class="sidebar__project-delete" data-testid="delete-project" tabindex="0" role="button" aria-label="Confirm deletion of project"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg><div class="project-delete-modal"><div class="project-delete-modal__inner"><p>Are you sure you want to delete this project?</p><button type="button">Delete</button><span tabindex="0" role="button" aria-label="Cancel adding project, do not delete">Cancel</span></div></div></span></div></li><li data-testid="project-action-parent" data-doc-id="zJ9RdhJ0JtoRGIGiOq1u" class="sidebar__project"><div role="button" data-testid="project-action" tabindex="0" aria-label="Select 🎵 Music as the task project"><span class="sidebar__dot">•</span><span class="sidebar__project-name">🎵 Music</span><span class="sidebar__project-delete" data-testid="delete-project" tabindex="0" role="button" aria-label="Confirm deletion of project"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg></span></div></li><li data-testid="project-action-parent" data-doc-id="A94zoJh0IJFQogN7SZrw" class="sidebar__project"><div role="button" data-testid="project-action" tabindex="0" aria-label="Select 🚀 DAILY as the task project"><span class="sidebar__dot">•</span><span class="sidebar__project-name">🚀 DAILY</span><span class="sidebar__project-delete" data-testid="delete-project" tabindex="0" role="button" aria-label="Confirm deletion of project"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg></span></div></li></ul><div class="add-project" data-testid="add-porject"><span class="add-project__plus">+</span><span data-testid="add-project-action" class="add-project__text">Add Project</span></div></div><div class="tasks" data-testid="tasks"><h2 data-testid="project-name">This is testing the add project feature</h2><ul class="tasks__list"></ul></div></div></div></div>
+  <script src="./This is testing the add project feature_ Todist_files/bundle.js.download"></script><script src="./This is testing the add project feature_ Todist_files/0.chunk.js.download"></script><script src="./This is testing the add project feature_ Todist_files/main.chunk.js.download"></script><script src="./This is testing the add project feature_ Todist_files/main.daee235e3a3d2a4fa80e.hot-update.js.download"></script>
+
+</body></html>
